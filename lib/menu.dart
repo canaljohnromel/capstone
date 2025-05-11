@@ -1,0 +1,102 @@
+import 'package:capstone/login_screen.dart';
+import 'package:flutter/material.dart';
+
+class DashboardScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => DashboardScreen();
+}
+
+class TenantsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => TenantsScreen();
+}
+
+class ChatsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => ChatsScreen();
+}
+
+class BillsPaymentsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => BillsPaymentsScreen();
+}
+
+class AnnouncementsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => AnnouncementsScreen();
+}
+
+class ReportsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => ReportsScreen();
+}
+
+class AnalyticsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => AnalyticsScreen();
+}
+
+class SidebarMenu extends StatelessWidget {
+  final List<Map<String, dynamic>> menuItems = [
+    {'title': 'Dashboard', 'icon': 'assets/icons/House_01.png', 'screen': DashboardScreen()},
+    {'title': 'Tenants', 'icon': 'assets/icons/Users_Group.png', 'screen': TenantsScreen()},
+    {'title': 'Chats', 'icon': 'assets/icons/Chat_Circle.png', 'screen': ChatsScreen()},
+    {'title': 'Bills & Payments', 'icon': 'assets/icons/Credit_Card_02.png', 'screen': BillsPaymentsScreen()},
+    {'title': 'Announcements', 'icon': 'assets/icons/User_Voice.png', 'screen': AnnouncementsScreen()},
+    {'title': 'Reports', 'icon': 'assets/icons/Octagon_Warning.png', 'screen': ReportsScreen()},
+    {'title': 'Analytics', 'icon': 'assets/icons/Chart_Line.png', 'screen': AnalyticsScreen()},
+    {'title': 'Log out', 'icon': 'assets/icons/logout.256x256.png', 'screen': LoginScreen()},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 230,
+      color: Colors.black87,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+            child: Center(
+              child: Text(
+                'Pinesville Properties',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              children: menuItems.map((item) {
+                return ListTile(
+                  leading: Image.asset(
+                    item['icon'],
+                    width: 24,
+                    height: 24,
+                    color: Colors.white70,
+                  ),
+                  title: Text(
+                    item['title'],
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => item['screen']),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
