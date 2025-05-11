@@ -1,37 +1,44 @@
+import 'package:capstone/analytics_screen.dart';
+import 'package:capstone/announcements_screen.dart';
+import 'package:capstone/billspayments_screen.dart';
+import 'package:capstone/chats_screen.dart';
+import 'package:capstone/dashboard_screen.dart';
+import 'package:capstone/reports_screen.dart';
+import 'package:capstone/tenants_screen.dart';
 import 'package:capstone/login_screen.dart';
 import 'package:flutter/material.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DashboardScreen();
 }
 
-class TenantsScreen extends StatelessWidget {
+class TenantsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => TenantsScreen();
 }
 
-class ChatsScreen extends StatelessWidget {
+class ChatsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ChatsScreen();
 }
 
-class BillsPaymentsScreen extends StatelessWidget {
+class BillsPaymentsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BillsPaymentsScreen();
 }
 
-class AnnouncementsScreen extends StatelessWidget {
+class AnnouncementsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => AnnouncementsScreen();
 }
 
-class ReportsScreen extends StatelessWidget {
+class ReportsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ReportsScreen();
 }
 
-class AnalyticsScreen extends StatelessWidget {
+class AnalyticsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => AnalyticsScreen();
 }

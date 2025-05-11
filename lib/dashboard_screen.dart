@@ -7,34 +7,28 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF121212), // Dark background
       body: Row(
         children: [
-          SidebarMenu(), // Sidebar Integration
+          SidebarMenu(),
           Expanded(
-            child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Pages / Dashboard',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
+                children: [Text(
+                  'Pages / Dashboard',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey[400],
                   ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'Dashboard',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                  SizedBox(height: 0),
+                  Text(
+                      'Dashboard',
+                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                        color: Colors.white,fontWeight: FontWeight.bold,)
                   ),
-                  const SizedBox(height: 16),
-                  _buildTopCards(),
-                  const SizedBox(height: 16),
-                  _buildMiddleAndBottomContent(),
+                  SizedBox(height: 30),
                 ],
               ),
             ),
@@ -43,6 +37,7 @@ class DashboardScreen extends StatelessWidget {
       ),
     );
   }
+}
 
   Widget _buildTopCards() {
     final cardData = [
@@ -90,7 +85,6 @@ class DashboardScreen extends StatelessWidget {
       ],
     );
   }
-}
 
 // Reusable components below
 
