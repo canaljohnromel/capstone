@@ -60,7 +60,7 @@ class _BillsPaymentsScreenState extends State<BillsPaymentsScreen> {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1E1E1E),
+                      color: const Color(0x00ff8049),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -247,7 +247,7 @@ class _BillsPaymentsScreenState extends State<BillsPaymentsScreen> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-        headingRowColor: MaterialStateColor.resolveWith((states) => Colors.grey[900]!),
+        headingRowColor: WidgetStateColor.resolveWith((states) => Colors.grey[900]!),
         columns: columns
             .map((title) => DataColumn(
           label: Text(

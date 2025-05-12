@@ -16,19 +16,25 @@ class DashboardScreen extends StatelessWidget {
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Text(
-                  'Pages / Dashboard',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[400],
-                  ),
-                ),
-                  SizedBox(height: 0),
+                children: [
                   Text(
-                      'Dashboard',
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        color: Colors.white,fontWeight: FontWeight.bold,)
+                    'Pages / Dashboard',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey[400],
+                    ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 0),
+                  Text(
+                    'Dashboard',
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  _buildTopCards(),
+                  const SizedBox(height: 30),
+                  Expanded(child: _buildMiddleAndBottomContent()),
                 ],
               ),
             ),
@@ -37,24 +43,28 @@ class DashboardScreen extends StatelessWidget {
       ),
     );
   }
-}
 
   Widget _buildTopCards() {
     final cardData = [
-      {'title': 'Total Rent Collected', 'value': '12,045'},
-      {'title': 'Total Rent Remaining', 'value': '12,045'},
-      {'title': 'Total Paid Tenants', 'value': '5'},
-      {'title': 'Total Pending Tenants', 'value': '6'},
-      {'title': 'Tenants', 'value': '16'},
+      {'title': 'Total Rent Collected', 'value': '12,045', 'icon': Icons.attach_money},
+      {'title': 'Total Rent Remaining', 'value': '12,045', 'icon': Icons.money_off},
+      {'title': 'Total Paid Tenants', 'value': '5', 'icon': Icons.check_circle},
+      {'title': 'Total Pending Tenants', 'value': '6', 'icon': Icons.pending},
+      {'title': 'Tenants', 'value': '16', 'icon': Icons.people},
     ];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: cardData.map((data) {
-        return _InfoCard(title: data['title']!, value: data['value']!);
+        return _InfoCard(
+          title: data['title'] as String,
+          value: data['value'] as String,
+          icon: data['icon'] as IconData,
+        );
       }).toList(),
     );
   }
+
 
   Widget _buildMiddleAndBottomContent() {
     return Column(
@@ -85,14 +95,20 @@ class DashboardScreen extends StatelessWidget {
       ],
     );
   }
+}
 
 // Reusable components below
 
 class _InfoCard extends StatelessWidget {
   final String title;
   final String value;
+  final IconData icon;
 
-  const _InfoCard({required this.title, required this.value});
+  const _InfoCard({
+    required this.title,
+    required this.value,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -104,12 +120,24 @@ class _InfoCard extends StatelessWidget {
           color: Colors.grey[900],
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(title, style: const TextStyle(color: Colors.white70)),
-            const SizedBox(height: 8),
-            Text(value, style: const TextStyle(color: Colors.orange, fontSize: 20)),
+            Icon(icon, color: Colors.orange, size: 28),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: const TextStyle(color: Colors.white70)),
+                  const SizedBox(height: 4),
+                  Text(
+                    value,
+                    style: const TextStyle(color: Colors.orange, fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

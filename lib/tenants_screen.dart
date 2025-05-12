@@ -171,10 +171,10 @@ class TenantsScreen extends StatelessWidget {
                       Expanded(child: Text("Unit", style: TextStyle(color: Colors.white70))),
                       Expanded(child: Text("Name", style: TextStyle(color: Colors.white70))),
                       Expanded(child: Text("Move-in Date", style: TextStyle(color: Colors.white70))),
-                      Expanded(child: Text("Actions", style: TextStyle(color: Colors.white70))),
-                      SizedBox(width: 60), // Action icons column
+                      SizedBox(width: 60, child: Text("Actions", style: TextStyle(color: Colors.white70))),
                     ],
                   ),
+
 
                   // Sample tenant rows (repeat with ListView.builder for real data)
                   Expanded(
@@ -190,7 +190,7 @@ class TenantsScreen extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     const CircleAvatar(
-                                      backgroundImage: AssetImage('assets/avatars/avatar.png'), // Replace with real image
+                                      backgroundImage: AssetImage('assets/avatars/avatar.png'),
                                     ),
                                     const SizedBox(width: 10),
                                     Column(
@@ -206,9 +206,29 @@ class TenantsScreen extends StatelessWidget {
                               const Expanded(
                                 child: Text("05/06/2025", style: TextStyle(color: Colors.white)),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.edit, color: Colors.grey),
-                                onPressed: () {},
+                              SizedBox(
+                                width: 60,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.edit, color: Colors.grey),
+                                      onPressed: () {
+                                        // Handle edit
+                                      },
+                                      padding: EdgeInsets.zero,
+                                      constraints: const BoxConstraints(),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete, color: Colors.grey),
+                                      onPressed: () {
+                                        // Handle delete
+                                      },
+                                      padding: EdgeInsets.zero,
+                                      constraints: const BoxConstraints(),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
