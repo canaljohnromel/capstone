@@ -7,6 +7,9 @@ class PinesvilleLoginApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Rubik',
+      ),
       home: DashboardScreen(),
     );
   }

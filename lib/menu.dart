@@ -52,8 +52,13 @@ class SidebarMenu extends StatelessWidget {
     {'title': 'Announcements', 'icon': 'assets/icons/User_Voice.png', 'screen': AnnouncementsScreen()},
     {'title': 'Reports', 'icon': 'assets/icons/Octagon_Warning.png', 'screen': ReportsScreen()},
     {'title': 'Analytics', 'icon': 'assets/icons/Chart_Line.png', 'screen': AnalyticsScreen()},
-    {'title': 'Log out', 'icon': 'assets/icons/logout.256x256.png', 'screen': LoginScreen()},
   ];
+
+  final Map<String, dynamic> logoutItem = {
+    'title': 'Log out',
+    'icon': 'assets/icons/logout.256x256.png',
+    'screen': LoginScreen(),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +105,25 @@ class SidebarMenu extends StatelessWidget {
                   },
                 );
               }).toList(),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, bottom: 16.0),
+            child: ListTile(
+              leading: Icon(
+                Icons.logout,
+                color: Colors.white70,
+              ),
+              title: Text(
+                logoutItem['title'],
+                style: const TextStyle(color: Colors.white70),
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => logoutItem['screen']),
+                );
+              },
             ),
           ),
         ],
