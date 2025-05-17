@@ -5,6 +5,7 @@ import 'package:capstone/chats_screen.dart';
 import 'package:capstone/dashboard_screen.dart';
 import 'package:capstone/reports_screen.dart';
 import 'package:capstone/tenants_screen.dart';
+import 'package:capstone/units_screen.dart';
 import 'package:capstone/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,9 @@ class DashboardMenu extends StatelessWidget {
   Widget build(BuildContext context) => DashboardScreen();
 }
 
-class TenantsMenu extends StatelessWidget {
+class UnitsMenu extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => TenantsScreen();
+  Widget build(BuildContext context) => UnitsScreen();
 }
 
 class ChatsMenu extends StatelessWidget {
@@ -38,20 +39,20 @@ class ReportsMenu extends StatelessWidget {
   Widget build(BuildContext context) => ReportsScreen();
 }
 
-class AnalyticsMenu extends StatelessWidget {
+class TenantsMenu extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => AnalyticsScreen();
+  Widget build(BuildContext context) => TenantsScreen();
 }
 
 class SidebarMenu extends StatelessWidget {
   final List<Map<String, dynamic>> menuItems = [
     {'title': 'Dashboard', 'icon': 'assets/icons/House_01.png', 'screen': DashboardScreen()},
-    {'title': 'Tenants', 'icon': 'assets/icons/Users_Group.png', 'screen': TenantsScreen()},
+    {'title': 'Units', 'icon': 'assets/icons/Users_Group.png', 'screen': UnitsScreen()},
     {'title': 'Chats', 'icon': 'assets/icons/Chat_Circle.png', 'screen': ChatsScreen()},
     {'title': 'Bills & Payments', 'icon': 'assets/icons/Credit_Card_02.png', 'screen': BillsPaymentsScreen()},
     {'title': 'Announcements', 'icon': 'assets/icons/User_Voice.png', 'screen': AnnouncementsScreen()},
     {'title': 'Reports', 'icon': 'assets/icons/Octagon_Warning.png', 'screen': ReportsScreen()},
-    {'title': 'Analytics', 'icon': 'assets/icons/Chart_Line.png', 'screen': AnalyticsScreen()},
+    {'title': 'Analytics', 'icon': 'assets/icons/Chart_Line.png', 'screen': TenantsScreen()},
   ];
 
   final Map<String, dynamic> logoutItem = {

@@ -1,6 +1,7 @@
 import 'package:capstone/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,21 +15,17 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final String _demoEmail = 'admin';
-  final String _demoPassword = 'admin123';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // Background pattern
           Positioned.fill(
             child: Opacity(
               opacity: 0.3,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/login-background.png'),
                     fit: BoxFit.none,
@@ -38,8 +35,6 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
               ),
             ),
           ),
-
-          // Main content
           LayoutBuilder(
             builder: (context, constraints) {
               bool isWideScreen = constraints.maxWidth > 800;
@@ -52,13 +47,10 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
                         ? Row(
                       children: [
                         _buildLoginForm(flex: 1),
-                        Container(
-                          height: 600,
-                          child: const VerticalDivider(
-                            color: Colors.grey,
-                            thickness: 1,
-                            width: 1,
-                          ),
+                        const VerticalDivider(
+                          color: Colors.grey,
+                          thickness: 1,
+                          width: 1,
                         ),
                         _buildIllustration(flex: 1),
                       ],
@@ -74,9 +66,6 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
               );
             },
           ),
-
-          // Developer credit at bottom center
-          // Developer credit at bottom center
           Positioned(
             bottom: 20,
             left: 0,
@@ -91,7 +80,7 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 4),
                   Image.asset(
-                    'assets/logos/silcotech.png', // Make sure this path is correct
+                    'assets/logos/silcotech.png',
                     height: 20,
                     fit: BoxFit.contain,
                   ),
@@ -112,7 +101,6 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Branding
             Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -164,8 +152,6 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 60),
-
-            // Email
             TextField(
               controller: _emailController,
               style: const TextStyle(color: Colors.white),
@@ -181,8 +167,6 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 16),
-
-            // Password
             TextField(
               controller: _passwordController,
               obscureText: _obscurePassword,
@@ -210,12 +194,10 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 32),
-
-            // Sign In Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   final email = _emailController.text.trim();
                   final password = _passwordController.text;
 
@@ -226,14 +208,30 @@ class _LoginScreenDesktopTabletState extends State<LoginScreen> {
                     return;
                   }
 
-                  if (email == _demoEmail && password == _demoPassword) {
+                  try {
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => DashboardScreen()),
                     );
-                  } else {
+                  } on FirebaseAuthException catch (e) {
+                    String message = 'Login failed';
+                    if (e.code == 'user-not-found') {
+                      message = 'No user found with this email.';
+                    } else if (e.code == 'wrong-password') {
+                      message = 'Incorrect password.';
+                    }
+
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Invalid email or password')),
+                      SnackBar(content: Text(message)),
+                    );
+                  } catch (_) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Something went wrong')),
                     );
                   }
                 },

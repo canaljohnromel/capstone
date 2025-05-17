@@ -215,7 +215,7 @@ class ChatsScreen extends StatelessWidget {
                                     ElevatedButton.icon(
                                       onPressed: () {},
                                       icon: Icon(Icons.person_remove, size: 16),
-                                      label: Text("Remove Tenant"),
+                                      label: Text("Remove"),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.grey[800],
                                       ),
