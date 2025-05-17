@@ -74,43 +74,46 @@ class TenantsScreen extends StatelessWidget {
 
   Widget _buildTenantInfoCard() {
     return _buildCard(
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Tenant Information",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+      SizedBox(
+        height: 300, // ✅ Set fixed height
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Tenant Information",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 12),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: CircleAvatar(
+                  radius: 24,
+                  backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+                ),
+                title: Text("Juan Dela Cruz", style: TextStyle(color: Colors.white)),
+                subtitle: Text("juan.delacruz@gmail.com", style: TextStyle(color: Colors.grey)),
+              ),
+              SizedBox(height: 16),
+              _infoRow("Unit", "101"),
+              _infoRow("Username", "Username"),
+              _infoRow("Contact Number", "Contact Number"),
+              _infoRow("Move-in Date", "Move-in Date"),
+              SizedBox(height: 16),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey[800],
+                ),
+                onPressed: () {},
+                child: Text("Transfer Tenant"),
+              ),
+            ],
           ),
-          SizedBox(height: 8),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: CircleAvatar(
-              radius: 24,
-              backgroundImage: NetworkImage(
-                  'https://via.placeholder.com/150'), // Replace with actual image
-            ),
-            title: Text("Juan Dela Cruz", style: TextStyle(color: Colors.white)),
-            subtitle: Text("juan.delacruz@gmail.com",
-                style: TextStyle(color: Colors.grey)),
-          ),
-          SizedBox(height: 12),
-          _infoRow("Unit", "101"),
-          _infoRow("Username", "Username"),
-          _infoRow("Contact Number", "Contact Number"),
-          _infoRow("Move-in Date", "Move-in Date"),
-          Spacer(),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey[800],
-            ),
-            onPressed: () {},
-            child: Text("Transfer Tenant"),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -133,18 +136,86 @@ class TenantsScreen extends StatelessWidget {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Transaction History", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          Divider(color: Colors.grey),
+          Text(
+            "Transaction History",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 12),
+
+          // Header Row with light background
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            decoration: BoxDecoration(
+              color: Color(0xFF2A2A2A),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: const [
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.0), // 👈 indent Date Paid
+                    child: Text(
+                      "Date Paid",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    "Amount",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    "Reference Id",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 8),
+
+          // Data rows
           Expanded(
             child: ListView.builder(
               itemCount: 6,
               itemBuilder: (context, index) {
-                return ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  dense: true,
-                  title: Text("12/14/2025", style: TextStyle(color: Colors.white)),
-                  subtitle: Text("₱ 3,025.00", style: TextStyle(color: Colors.grey)),
-                  trailing: Text("PY-2025-1024XXXX", style: TextStyle(color: Colors.grey)),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 8.0), // 👈 match indent
+                          child: Text("12/14/2025", style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text("₱ 3,025.00", style: TextStyle(color: Colors.white)),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text("PY-2025-1024XXXX", style: TextStyle(color: Colors.white)),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

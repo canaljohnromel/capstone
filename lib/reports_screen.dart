@@ -86,8 +86,7 @@ class ReportsScreen extends StatelessWidget {
                         return Container(
                           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                           decoration: BoxDecoration(
-                            color: index % 2 == 0 ? const Color(0xFF1A1A1A) : const Color(0xFF121212),
-                            border: Border(bottom: BorderSide(color: Colors.grey[800]!)),
+                            color: const Color(0xFF121212)
                           ),
                           child: Row(
                             children: [
