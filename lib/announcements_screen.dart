@@ -1,28 +1,30 @@
 import 'package:capstone/compose_screen.dart';
-import 'package:capstone/menu.dart';
-import 'package:capstone/models/announcement.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:capstone/menu.dart';
 
-Announcement? selectedAnnouncement;
+class Announcement {
+  final String title;
+  final String message;
+  final String recipient;
+  final DateTime timestamp;
 
-String timeAgo(DateTime date) {
-  final Duration diff = DateTime.now().difference(date);
-  if (diff.inMinutes < 1) return 'Just now';
-  if (diff.inMinutes < 60) return '${diff.inMinutes} min ago';
-  if (diff.inHours < 24) return '${diff.inHours} hour${diff.inHours == 1 ? '' : 's'} ago';
-  return '${diff.inDays} day${diff.inDays == 1 ? '' : 's'} ago';
-}
+  Announcement({
+    required this.title,
+    required this.message,
+    required this.recipient,
+    required this.timestamp,
+  });
 
-Future<List<Announcement>> fetchAnnouncements() async {
-  final snapshot = await FirebaseFirestore.instance
-      .collection('announcements')
-      .orderBy('timestamp', descending: true)
-      .get();
-
-  return snapshot.docs
-      .map((doc) => Announcement.fromMap(doc.data()))
-      .toList();
+  factory Announcement.fromMap(Map<String, dynamic> map) {
+    return Announcement(
+      title: map['title'] ?? '',
+      message: map['message'] ?? '',
+      recipient: map['recipient'] ?? '',
+      timestamp: (map['timestamp'] as Timestamp).toDate(),
+    );
+  }
 }
 
 class AnnouncementsScreen extends StatefulWidget {
@@ -35,7 +37,6 @@ class AnnouncementsScreen extends StatefulWidget {
 class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
   Announcement? selectedAnnouncement;
 
-  // Time ago helper
   String timeAgo(DateTime date) {
     final diff = DateTime.now().difference(date);
     if (diff.inMinutes < 1) return 'Just now';
@@ -200,7 +201,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                                           horizontal: 20, vertical: 12),
                                     ),
                                     onPressed: () {
-                                      // open compose dialog
+                                      showComposeAnnouncementDialog(context);
                                     },
                                     icon: const Icon(Icons.add, color: Colors.white),
                                     label: const Text(
@@ -244,7 +245,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  timeAgo(selectedAnnouncement!.timestamp),
+                                  '${timeAgo(selectedAnnouncement!.timestamp)} • ${DateFormat('MMM d, y – h:mm a').format(selectedAnnouncement!.timestamp)}',
                                   style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey,

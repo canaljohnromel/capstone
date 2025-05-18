@@ -223,7 +223,7 @@ class UnitsScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Row(
                                   children: [
-                                    Expanded(child: Text("Unit $unit", style: const TextStyle(color: Colors.white))),
+                                    Expanded(child: Text("$unit", style: const TextStyle(color: Colors.white))),
                                     Expanded(
                                       child: Row(
                                         children: [
