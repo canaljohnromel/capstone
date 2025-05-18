@@ -1,4 +1,5 @@
 import 'package:capstone/pending_applications.dart';
+import 'package:capstone/tenants_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone/menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,14 +32,14 @@ class UnitsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Pages / Tenant Management',
+                    'Pages / Units Management',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.grey[400],
                     ),
                   ),
                   const SizedBox(height: 0),
                   Text(
-                    'Unit Management',
+                    'Units Management',
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -209,74 +210,73 @@ class UnitsScreen extends StatelessWidget {
                             final email = data['email'] ?? 'noemail@domain.com';
                             final moveInDate = formatTimestamp(data['moveInDate']);
 
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                children: [
-                                  Expanded(child: Text("Unit $unit", style: const TextStyle(color: Colors.white))),
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        const CircleAvatar(
-                                          backgroundImage: AssetImage('assets/avatars/avatar.png'),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(name, style: const TextStyle(color: Colors.white)),
-                                            Text(email, style: const TextStyle(color: Colors.grey)),
-                                          ],
-                                        ),
-                                      ],
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TenantsScreen(tenantId: tenants[index].id),
+                                  ),
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(child: Text("Unit $unit", style: const TextStyle(color: Colors.white))),
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          const CircleAvatar(
+                                            backgroundImage: AssetImage('assets/avatars/avatar.png'),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(name, style: const TextStyle(color: Colors.white)),
+                                              Text(email, style: const TextStyle(color: Colors.grey)),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Text(moveInDate, style: const TextStyle(color: Colors.white)),
-                                  ),
-                                  SizedBox(
-                                    width: 60,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        IconButton(
-                                          icon: const Icon(Icons.edit, color: Colors.grey),
-                                          onPressed: () {
-                                            // TODO: Handle edit
-                                          },
-                                          padding: EdgeInsets.zero,
-                                          constraints: const BoxConstraints(),
-                                        ),
-                                        IconButton(
-                                          icon: const Icon(Icons.delete, color: Colors.grey),
-                                          onPressed: () async {
-                                            final confirm = await showDialog<bool>(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                title: const Text('Confirm Delete'),
-                                                content: const Text('Are you sure you want to delete this tenant?'),
-                                                actions: [
-                                                  TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-                                                  TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Delete')),
-                                                ],
-                                              ),
-                                            );
-
-                                            if (confirm == true) {
-                                              // perform deletion
-                                              await FirebaseFirestore.instance.collection('tenants').doc(docId).delete();
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                const SnackBar(content: Text('Tenant deleted')),
-                                              );
-                                            }
-                                          },
-                                          padding: EdgeInsets.zero,
-                                          constraints: const BoxConstraints(),
-                                        ),
-                                      ],
+                                    Expanded(child: Text(moveInDate, style: const TextStyle(color: Colors.white))),
+                                    SizedBox(
+                                      width: 60,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.edit, color: Colors.grey),
+                                            onPressed: () {
+                                              // TODO: Handle edit
+                                            },
+                                            padding: EdgeInsets.zero,
+                                            constraints: const BoxConstraints(),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.delete, color: Colors.grey),
+                                            onPressed: () async {
+                                              try {
+                                                await FirebaseFirestore.instance.collection('tenants').doc(docId).delete();
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  const SnackBar(content: Text('Tenant deleted')),
+                                                );
+                                              } catch (e) {
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  SnackBar(content: Text('Failed to delete tenant: $e')),
+                                                );
+                                              }
+                                            },
+                                            padding: EdgeInsets.zero,
+                                            constraints: const BoxConstraints(),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           },

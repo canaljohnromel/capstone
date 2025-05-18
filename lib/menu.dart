@@ -4,7 +4,6 @@ import 'package:capstone/billspayments_screen.dart';
 import 'package:capstone/chats_screen.dart';
 import 'package:capstone/dashboard_screen.dart';
 import 'package:capstone/reports_screen.dart';
-import 'package:capstone/tenants_screen.dart';
 import 'package:capstone/units_screen.dart';
 import 'package:capstone/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +38,9 @@ class ReportsMenu extends StatelessWidget {
   Widget build(BuildContext context) => ReportsScreen();
 }
 
-class TenantsMenu extends StatelessWidget {
+class AnalyticsMenu extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => TenantsScreen();
+  Widget build(BuildContext context) => AnalyticsScreen();
 }
 
 class SidebarMenu extends StatelessWidget {
@@ -52,7 +51,7 @@ class SidebarMenu extends StatelessWidget {
     {'title': 'Bills & Payments', 'icon': 'assets/icons/Credit_Card_02.png', 'screen': BillsPaymentsScreen()},
     {'title': 'Announcements', 'icon': 'assets/icons/User_Voice.png', 'screen': AnnouncementsScreen()},
     {'title': 'Reports', 'icon': 'assets/icons/Octagon_Warning.png', 'screen': ReportsScreen()},
-    {'title': 'Analytics', 'icon': 'assets/icons/Chart_Line.png', 'screen': TenantsScreen()},
+    {'title': 'Analytics', 'icon': 'assets/icons/Chart_Line.png', 'screen': AnalyticsScreen()},
   ];
 
   final Map<String, dynamic> logoutItem = {
